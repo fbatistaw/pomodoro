@@ -12,7 +12,7 @@
         /* Estilos globais e específicos para o aplicativo */
         body {
             font-family: 'Noto Sans', sans-serif; /* Aplica a fonte Noto Sans */
-            background-color: #ffe6e6; /* Cor de fundo suave que lembra um tom claro de tomate */
+            background-color: #ffe6e6; /* Mantém um fundo sutil para a página, mas o container será transparente */
             display: flex;
             justify-content: center;
             align-items: center;
@@ -21,35 +21,56 @@
             overflow: hidden; /* Previne rolagem indesejada */
         }
         .container {
-            background-color: #ffffff; /* Fundo branco para o container principal */
-            border-radius: 20px; /* Cantos arredondados */
-            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1); /* Sombra sutil para profundidade */
-            padding: 40px; /* Espaçamento interno */
+            background-color: transparent; /* Fundo transparente */
+            border-radius: 0; /* Sem cantos arredondados */
+            box-shadow: none; /* Sem sombra */
+            padding: 15px; /* Espaçamento interno reduzido */
             display: flex;
-            flex-direction: column; /* Organiza os elementos verticalmente */
-            align-items: center; /* Centraliza horizontalmente */
+            flex-direction: row; /* Layout horizontal (linha) */
+            align-items: center; /* Centraliza os itens verticalmente na linha */
+            justify-content: space-around; /* Distribui o espaço entre os itens */
             position: relative; /* Necessário para posicionar o botão de reiniciar */
-            max-width: 90%; /* Garante responsividade em telas menores */
-            width: 400px; /* Largura máxima para o container */
+            max-width: 95%; /* Garante responsividade em telas menores */
+            width: 360px; /* Largura reduzida para o layout horizontal pequeno */
+            min-height: 180px; /* Altura mínima reduzida para o layout horizontal pequeno */
         }
+        /* Estilos para o painel esquerdo (tomate e contador) */
+        .left-panel {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            padding-right: 15px; /* Espaçamento entre os painéis */
+            flex-shrink: 0; /* Evita que o painel encolha */
+        }
+        /* Estilos para o painel direito (botão adicionar) */
+        .right-panel {
+            display: flex;
+            flex-direction: column; /* Botões empilhados verticalmente */
+            align-items: center;
+            justify-content: center;
+            padding-left: 15px; /* Espaçamento entre os painéis */
+            flex-grow: 1; /* Permite que o painel ocupe o espaço restante */
+        }
+
         .restart-button {
             position: absolute;
-            top: 20px;
-            right: 20px;
+            top: 10px; /* Posição mais próxima da borda */
+            right: 10px; /* Posição mais próxima da borda */
             background: none; /* Sem fundo */
             border: none; /* Sem borda */
             cursor: pointer; /* Indica que é clicável */
             color: #dc2626; /* Cor vermelha do tomate */
-            font-size: 2rem; /* Tamanho do ícone */
+            font-size: 1.5rem; /* Tamanho do ícone reduzido */
             transition: transform 0.2s ease-in-out; /* Transição suave para o efeito de rotação */
         }
         .restart-button:hover {
             transform: rotate(90deg); /* Gira o ícone ao passar o mouse */
         }
         .tomato-icon {
-            width: 100px; /* Largura do ícone do tomate */
-            height: 100px; /* Altura do ícone do tomate */
-            margin-bottom: 20px; /* Espaçamento abaixo do ícone */
+            width: 70px; /* Largura do ícone do tomate reduzida */
+            height: 70px; /* Altura do ícone do tomate reduzida */
+            margin-bottom: 15px; /* Espaçamento abaixo do ícone */
             animation: bounce 2s infinite; /* Adiciona uma animação de pulo ao tomate */
         }
         /* Animação de pulo para o ícone do tomate */
@@ -58,60 +79,94 @@
                 transform: translateY(0);
             }
             40% {
-                transform: translateY(-15px);
+                transform: translateY(-10px); /* Pulo menor */
             }
             60% {
-                transform: translateY(-7px);
+                transform: translateY(-5px); /* Pulo menor */
             }
         }
         .session-display {
             display: flex; /* Permite alinhar os números lado a lado */
             align-items: baseline; /* Alinha a base do texto */
-            margin-bottom: 30px; /* Espaçamento abaixo do display */
             color: #333; /* Cor do texto padrão */
         }
         .session-count {
-            font-size: 6rem; /* Tamanho da fonte maior para a contagem atual */
+            font-size: 4rem; /* Tamanho da fonte maior para a contagem atual reduzido */
             font-weight: 700; /* Negrito */
             color: #dc2626; /* Cor vermelha do tomate */
             line-height: 1; /* Altura da linha para evitar espaços extras */
         }
         .session-total {
-            font-size: 2.5rem; /* Tamanho da fonte menor para o total */
+            font-size: 1.8rem; /* Tamanho da fonte menor para o total reduzido */
             font-weight: 400; /* Peso da fonte normal */
             color: #666; /* Cor cinza para o texto total */
-            margin-left: 10px; /* Espaçamento à esquerda */
+            margin-left: 8px; /* Espaçamento à esquerda reduzido */
             line-height: 1; /* Altura da linha */
         }
         .add-button {
             background-color: #ef4444; /* Vermelho vibrante do tomate para o botão */
             color: white; /* Texto branco */
-            font-size: 4rem; /* Tamanho da fonte para o "+" */
+            font-size: 3rem; /* Tamanho da fonte para o "+" reduzido */
             font-weight: 700; /* Negrito */
-            width: 120px; /* Largura do botão */
-            height: 120px; /* Altura do botão */
+            width: 80px; /* Largura do botão reduzida */
+            height: 80px; /* Altura do botão reduzida */
             border-radius: 50%; /* Transforma o botão em um círculo */
             border: none; /* Remove a borda */
             cursor: pointer; /* Indica que é clicável */
             display: flex;
             justify-content: center;
             align-items: center;
-            box-shadow: 0 5px 15px rgba(239, 68, 68, 0.4); /* Sombra para o botão */
+            box-shadow: 0 3px 10px rgba(239, 68, 68, 0.4); /* Sombra mais suave para o botão */
             transition: background-color 0.2s ease-in-out, transform 0.1s ease-in-out; /* Transições suaves */
         }
         .add-button:hover {
             background-color: #dc2626; /* Cor mais escura ao passar o mouse */
-            transform: translateY(-3px); /* Leve levantamento ao passar o mouse */
+            transform: translateY(-2px); /* Leve levantamento ao passar o mouse */
         }
         .add-button:active {
             background-color: #b91c1c; /* Cor ainda mais escura ao clicar */
             transform: translateY(0); /* Retorna à posição original ao clicar */
         }
+
+        /* Media Queries para responsividade em telas menores */
+        @media (max-width: 640px) {
+            .container {
+                flex-direction: column; /* Volta para a direção vertical em telas muito pequenas */
+                width: 90%; /* Ajusta a largura */
+                min-height: auto; /* Remove a altura mínima fixa */
+                padding: 15px; /* Reduz o padding */
+            }
+            .left-panel, .right-panel {
+                padding: 0; /* Remove padding lateral */
+            }
+            .tomato-icon {
+                width: 60px; /* Reduz o tamanho do tomate */
+                height: 60px;
+                margin-bottom: 10px;
+            }
+            .session-count {
+                font-size: 3.5rem; /* Reduz o tamanho da fonte do contador */
+            }
+            .session-total {
+                font-size: 1.5rem; /* Reduz o tamanho da fonte do total */
+            }
+            .add-button {
+                width: 70px; /* Reduz o tamanho do botão */
+                height: 70px;
+                font-size: 2.5rem;
+                margin-top: 15px; /* Adiciona espaçamento superior para o botão */
+            }
+            .restart-button {
+                top: 5px;
+                right: 5px;
+                font-size: 1.3rem;
+            }
+        }
     </style>
 </head>
 <body>
     <div class="container">
-        <!-- Botão de Reiniciar no canto superior direito -->
+        <!-- Botão de Reiniciar no canto superior direito (mantém posição absoluta relativa ao container) -->
         <button id="restartButton" class="restart-button" aria-label="Reiniciar Contagem">
             <!-- Ícone de seta girando mais simples (SVG) -->
             <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" fill="currentColor" viewBox="0 0 16 16">
@@ -120,25 +175,31 @@
             </svg>
         </button>
 
-        <!-- Ícone de Tomate (SVG simples) -->
-        <svg class="tomato-icon" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
-            <title>Ícone de Tomate</title>
-            <!-- Corpo vermelho do tomate -->
-            <circle cx="50" cy="65" r="30" fill="#EF4444"/>
-            <path d="M50 35 C 70 35, 70 50, 50 65 C 30 50, 30 35, 50 35Z" fill="#EF4444"/>
-            <!-- Caule verde do tomate -->
-            <path d="M48 30 Q 45 10, 55 10 T 52 30" fill="#22C55E"/>
-            <circle cx="50" cy="30" r="5" fill="#22C55E"/>
-        </svg>
+        <!-- Painel Esquerdo: Tomate e Contador -->
+        <div class="left-panel">
+            <!-- Ícone de Tomate (SVG simples) -->
+            <svg class="tomato-icon" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
+                <title>Ícone de Tomate</title>
+                <!-- Corpo vermelho do tomate -->
+                <circle cx="50" cy="65" r="30" fill="#EF4444"/>
+                <path d="M50 35 C 70 35, 70 50, 50 65 C 30 50, 30 35, 50 35Z" fill="#EF4444"/>
+                <!-- Caule verde do tomate -->
+                <path d="M48 30 Q 45 10, 55 10 T 52 30" fill="#22C55E"/>
+                <circle cx="50" cy="30" r="5" fill="#22C55E"/>
+            </svg>
 
-        <!-- Display da contagem de sessões -->
-        <div class="session-display">
-            <span id="currentSessionCount" class="session-count">0</span>
-            <span class="session-total">/14</span>
+            <!-- Display da contagem de sessões -->
+            <div class="session-display">
+                <span id="currentSessionCount" class="session-count">0</span>
+                <span class="session-total">/14</span>
+            </div>
         </div>
 
-        <!-- Botão para adicionar sessões -->
-        <button id="addButton" class="add-button">+</button>
+        <!-- Painel Direito: Botão Adicionar -->
+        <div class="right-panel">
+            <!-- Botão para adicionar sessões -->
+            <button id="addButton" class="add-button">+</button>
+        </div>
     </div>
 
     <script>
