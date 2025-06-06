@@ -1,0 +1,250 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Contador de Sessões Pomodoro</title>
+    <!-- Tailwind CSS CDN para estilização rápida e responsiva -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Google Fonts: Noto Sans para a fonte solicitada -->
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans:wght@400;700&display=swap" rel="stylesheet">
+    <style>
+        /* Estilos globais e específicos para o aplicativo */
+        body {
+            font-family: 'Noto Sans', sans-serif; /* Aplica a fonte Noto Sans */
+            background-color: #ffe6e6; /* Cor de fundo suave que lembra um tom claro de tomate */
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh; /* Garante que o corpo ocupe a altura total da viewport */
+            margin: 0;
+            overflow: hidden; /* Previne rolagem indesejada */
+        }
+        .container {
+            background-color: #ffffff; /* Fundo branco para o container principal */
+            border-radius: 20px; /* Cantos arredondados */
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1); /* Sombra sutil para profundidade */
+            padding: 40px; /* Espaçamento interno */
+            display: flex;
+            flex-direction: column; /* Organiza os elementos verticalmente */
+            align-items: center; /* Centraliza horizontalmente */
+            position: relative; /* Necessário para posicionar o botão de reiniciar */
+            max-width: 90%; /* Garante responsividade em telas menores */
+            width: 400px; /* Largura máxima para o container */
+        }
+        .restart-button {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            background: none; /* Sem fundo */
+            border: none; /* Sem borda */
+            cursor: pointer; /* Indica que é clicável */
+            color: #dc2626; /* Cor vermelha do tomate */
+            font-size: 2rem; /* Tamanho do ícone */
+            transition: transform 0.2s ease-in-out; /* Transição suave para o efeito de rotação */
+        }
+        .restart-button:hover {
+            transform: rotate(90deg); /* Gira o ícone ao passar o mouse */
+        }
+        .tomato-icon {
+            width: 100px; /* Largura do ícone do tomate */
+            height: 100px; /* Altura do ícone do tomate */
+            margin-bottom: 20px; /* Espaçamento abaixo do ícone */
+            animation: bounce 2s infinite; /* Adiciona uma animação de pulo ao tomate */
+        }
+        /* Animação de pulo para o ícone do tomate */
+        @keyframes bounce {
+            0%, 20%, 50%, 80%, 100% {
+                transform: translateY(0);
+            }
+            40% {
+                transform: translateY(-15px);
+            }
+            60% {
+                transform: translateY(-7px);
+            }
+        }
+        .session-display {
+            display: flex; /* Permite alinhar os números lado a lado */
+            align-items: baseline; /* Alinha a base do texto */
+            margin-bottom: 30px; /* Espaçamento abaixo do display */
+            color: #333; /* Cor do texto padrão */
+        }
+        .session-count {
+            font-size: 6rem; /* Tamanho da fonte maior para a contagem atual */
+            font-weight: 700; /* Negrito */
+            color: #dc2626; /* Cor vermelha do tomate */
+            line-height: 1; /* Altura da linha para evitar espaços extras */
+        }
+        .session-total {
+            font-size: 2.5rem; /* Tamanho da fonte menor para o total */
+            font-weight: 400; /* Peso da fonte normal */
+            color: #666; /* Cor cinza para o texto total */
+            margin-left: 10px; /* Espaçamento à esquerda */
+            line-height: 1; /* Altura da linha */
+        }
+        .add-button {
+            background-color: #ef4444; /* Vermelho vibrante do tomate para o botão */
+            color: white; /* Texto branco */
+            font-size: 4rem; /* Tamanho da fonte para o "+" */
+            font-weight: 700; /* Negrito */
+            width: 120px; /* Largura do botão */
+            height: 120px; /* Altura do botão */
+            border-radius: 50%; /* Transforma o botão em um círculo */
+            border: none; /* Remove a borda */
+            cursor: pointer; /* Indica que é clicável */
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            box-shadow: 0 5px 15px rgba(239, 68, 68, 0.4); /* Sombra para o botão */
+            transition: background-color 0.2s ease-in-out, transform 0.1s ease-in-out; /* Transições suaves */
+        }
+        .add-button:hover {
+            background-color: #dc2626; /* Cor mais escura ao passar o mouse */
+            transform: translateY(-3px); /* Leve levantamento ao passar o mouse */
+        }
+        .add-button:active {
+            background-color: #b91c1c; /* Cor ainda mais escura ao clicar */
+            transform: translateY(0); /* Retorna à posição original ao clicar */
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!-- Botão de Reiniciar no canto superior direito -->
+        <button id="restartButton" class="restart-button" aria-label="Reiniciar Contagem">
+            <!-- Ícone de seta girando mais simples (SVG) -->
+            <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" fill="currentColor" viewBox="0 0 16 16">
+                <path fill-rule="evenodd" d="M8 3a5 5 0 1 0 4.546 2.914.5.5 0 0 1 .908-.417A6 6 0 1 1 8 2v1z"/>
+                <path d="M8 4.464l-2.071 2.072-.707-.707 2.778-2.779h.707zm-.707 7.072l-2.071-2.072.707-.707 2.778 2.779h.707z"/>
+            </svg>
+        </button>
+
+        <!-- Ícone de Tomate (SVG simples) -->
+        <svg class="tomato-icon" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
+            <title>Ícone de Tomate</title>
+            <!-- Corpo vermelho do tomate -->
+            <circle cx="50" cy="65" r="30" fill="#EF4444"/>
+            <path d="M50 35 C 70 35, 70 50, 50 65 C 30 50, 30 35, 50 35Z" fill="#EF4444"/>
+            <!-- Caule verde do tomate -->
+            <path d="M48 30 Q 45 10, 55 10 T 52 30" fill="#22C55E"/>
+            <circle cx="50" cy="30" r="5" fill="#22C55E"/>
+        </svg>
+
+        <!-- Display da contagem de sessões -->
+        <div class="session-display">
+            <span id="currentSessionCount" class="session-count">0</span>
+            <span class="session-total">/14</span>
+        </div>
+
+        <!-- Botão para adicionar sessões -->
+        <button id="addButton" class="add-button">+</button>
+    </div>
+
+    <script>
+        const MAX_SESSIONS = 14; /* Número máximo de sessões */
+        const currentSessionCountElement = document.getElementById('currentSessionCount');
+        const addButton = document.getElementById('addButton');
+        const restartButton = document.getElementById('restartButton');
+
+        let sessionCount = 0; /* Variável para armazenar a contagem atual de sessões */
+        let audioContext; /* Contexto de áudio para gerar o som */
+        let oscillator; /* Oscilador para o som */
+        let gainNode; /* Nó de ganho para controlar o volume do som */
+
+        // Função para tocar um som curto (beep)
+        function playBeep() {
+            // Verifica se o AudioContext está inicializado e em estado 'running'
+            if (audioContext && audioContext.state === 'running') {
+                // Para qualquer som existente para evitar sobreposição
+                if (oscillator) {
+                    oscillator.stop();
+                    oscillator.disconnect();
+                }
+
+                oscillator = audioContext.createOscillator(); /* Cria um novo oscilador */
+                gainNode = audioContext.createGain(); /* Cria um novo nó de ganho */
+
+                oscillator.type = 'sine'; /* Tipo de onda senoidal para um beep suave */
+                oscillator.frequency.setValueAtTime(440, audioContext.currentTime); /* Frequência de 440 Hz (Nota A4) */
+                gainNode.gain.setValueAtTime(0.5, audioContext.currentTime); /* Volume máximo inicial */
+                // Diminui exponencialmente o volume para criar um efeito de fade out rápido
+                gainNode.gain.exponentialRampToValueAtTime(0.001, audioContext.currentTime + 0.1); 
+
+                oscillator.connect(gainNode); /* Conecta o oscilador ao nó de ganho */
+                gainNode.connect(audioContext.destination); /* Conecta o nó de ganho à saída de áudio */
+
+                oscillator.start(audioContext.currentTime); /* Inicia o oscilador imediatamente */
+                oscillator.stop(audioContext.currentTime + 0.1); /* Para o oscilador após 0.1 segundos */
+            } else {
+                console.log('AudioContext não pronto ou suspenso. Clique para habilitar.');
+            }
+        }
+
+        // Função para inicializar o AudioContext. Chamada na primeira interação do usuário.
+        function initAudio() {
+            if (!audioContext) {
+                audioContext = new (window.AudioContext || window.webkitAudioContext)();
+                // Retoma o contexto se estiver suspenso (por exemplo, devido a políticas de autoplay)
+                if (audioContext.state === 'suspended') {
+                    audioContext.resume();
+                }
+            }
+        }
+
+        // Função para atualizar o display da contagem de sessões
+        function updateDisplay() {
+            currentSessionCountElement.textContent = sessionCount;
+        }
+
+        // Função para carregar a contagem de sessões do localStorage
+        function loadSessionCount() {
+            const storedCount = localStorage.getItem('pomodoroSessionCount');
+            if (storedCount !== null) {
+                sessionCount = parseInt(storedCount, 10); /* Converte a string para número inteiro */
+                // Sanitiza dados inválidos ou fora dos limites
+                if (isNaN(sessionCount) || sessionCount < 0) {
+                    sessionCount = 0;
+                }
+                if (sessionCount > MAX_SESSIONS) {
+                    sessionCount = MAX_SESSIONS;
+                }
+            }
+            updateDisplay(); /* Atualiza o display após carregar */
+        }
+
+        // Função para salvar a contagem de sessões no localStorage
+        function saveSessionCount() {
+            localStorage.setItem('pomodoroSessionCount', sessionCount);
+        }
+
+        // Adiciona um listener de evento para o botão de Adicionar
+        addButton.addEventListener('click', () => {
+            initAudio(); /* Garante que o contexto de áudio seja inicializado na primeira interação */
+            if (sessionCount < MAX_SESSIONS) {
+                sessionCount++; /* Incrementa a contagem */
+                updateDisplay(); /* Atualiza o display */
+                saveSessionCount(); /* Salva a contagem */
+                playBeep(); /* Toca o som */
+            } else {
+                console.log("Número máximo de sessões atingido!"); /* Mensagem no console se o máximo for atingido */
+            }
+        });
+
+        // Adiciona um listener de evento para o botão de Reiniciar
+        restartButton.addEventListener('click', () => {
+            sessionCount = 0; /* Reseta a contagem para 0 */
+            updateDisplay(); /* Atualiza o display */
+            saveSessionCount(); /* Salva a nova contagem (0) */
+            console.log("Contagem reiniciada.");
+        });
+
+        // Carrega a contagem ao carregar a página
+        document.addEventListener('DOMContentLoaded', loadSessionCount);
+
+        // Adiciona listeners globais para garantir que o AudioContext seja retomado em qualquer interação do usuário
+        document.body.addEventListener('click', initAudio, { once: true });
+        document.body.addEventListener('touchend', initAudio, { once: true });
+    </script>
+</body>
+</html>
