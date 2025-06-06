@@ -14,8 +14,8 @@
             font-family: 'Noto Sans', sans-serif; /* Aplica a fonte Noto Sans */
             background-color: #ffe6e6; /* Mantém um fundo sutil para a página, mas o container será transparente */
             display: flex;
-            justify-content: center;
-            align-items: center;
+            justify-content: center; /* Centraliza horizontalmente o container */
+            align-items: center; /* Centraliza verticalmente o container */
             min-height: 100vh; /* Garante que o corpo ocupe a altura total da viewport */
             margin: 0;
             overflow: hidden; /* Previne rolagem indesejada */
@@ -24,53 +24,50 @@
             background-color: transparent; /* Fundo transparente */
             border-radius: 0; /* Sem cantos arredondados */
             box-shadow: none; /* Sem sombra */
-            padding: 15px; /* Espaçamento interno reduzido */
+            padding: 10px; /* Espaçamento interno reduzido */
             display: flex;
-            flex-direction: row; /* Layout horizontal (linha) */
+            flex-direction: row; /* Layout horizontal por padrão para formato quadrado */
             align-items: center; /* Centraliza os itens verticalmente na linha */
-            justify-content: space-around; /* Distribui o espaço entre os itens */
+            justify-content: center; /* Centraliza o conteúdo horizontalmente */
+            width: 250px; /* Largura para o formato quadrado */
+            height: 250px; /* Altura para o formato quadrado */
             position: relative; /* Necessário para posicionar o botão de reiniciar */
-            max-width: 95%; /* Garante responsividade em telas menores */
-            width: 360px; /* Largura reduzida para o layout horizontal pequeno */
-            min-height: 180px; /* Altura mínima reduzida para o layout horizontal pequeno */
         }
         /* Estilos para o painel esquerdo (tomate e contador) */
         .left-panel {
             display: flex;
             flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            padding-right: 15px; /* Espaçamento entre os painéis */
-            flex-shrink: 0; /* Evita que o painel encolha */
+            align-items: center; /* Centraliza horizontalmente os elementos dentro do painel esquerdo */
+            justify-content: center; /* Centraliza verticalmente os elementos dentro do painel esquerdo */
+            flex: 1; /* Permite que o painel ocupe espaço disponível */
         }
         /* Estilos para o painel direito (botão adicionar) */
         .right-panel {
             display: flex;
             flex-direction: column; /* Botões empilhados verticalmente */
-            align-items: center;
-            justify-content: center;
-            padding-left: 15px; /* Espaçamento entre os painéis */
-            flex-grow: 1; /* Permite que o painel ocupe o espaço restante */
+            align-items: center; /* Centraliza horizontalmente os elementos dentro do painel direito */
+            justify-content: center; /* Centraliza verticalmente os elementos dentro do painel direito */
+            flex: 1; /* Permite que o painel ocupe espaço disponível */
         }
 
         .restart-button {
             position: absolute;
-            top: 10px; /* Posição mais próxima da borda */
-            right: 10px; /* Posição mais próxima da borda */
+            top: 5px; /* Posição mais próxima da borda */
+            right: 5px; /* Posição mais próxima da borda */
             background: none; /* Sem fundo */
             border: none; /* Sem borda */
             cursor: pointer; /* Indica que é clicável */
             color: #dc2626; /* Cor vermelha do tomate */
-            font-size: 1.5rem; /* Tamanho do ícone reduzido */
+            font-size: 1.2rem; /* Tamanho do ícone reduzido */
             transition: transform 0.2s ease-in-out; /* Transição suave para o efeito de rotação */
         }
         .restart-button:hover {
             transform: rotate(90deg); /* Gira o ícone ao passar o mouse */
         }
         .tomato-icon {
-            width: 70px; /* Largura do ícone do tomate reduzida */
-            height: 70px; /* Altura do ícone do tomate reduzida */
-            margin-bottom: 15px; /* Espaçamento abaixo do ícone */
+            width: 60px; /* Largura do ícone do tomate reduzida */
+            height: 60px; /* Altura do ícone do tomate reduzida */
+            margin-bottom: 10px; /* Espaçamento abaixo do ícone */
             animation: bounce 2s infinite; /* Adiciona uma animação de pulo ao tomate */
         }
         /* Animação de pulo para o ícone do tomate */
@@ -91,25 +88,25 @@
             color: #333; /* Cor do texto padrão */
         }
         .session-count {
-            font-size: 4rem; /* Tamanho da fonte maior para a contagem atual reduzido */
+            font-size: 3.5rem; /* Tamanho da fonte maior para a contagem atual reduzido */
             font-weight: 700; /* Negrito */
             color: #dc2626; /* Cor vermelha do tomate */
             line-height: 1; /* Altura da linha para evitar espaços extras */
         }
         .session-total {
-            font-size: 1.8rem; /* Tamanho da fonte menor para o total reduzido */
+            font-size: 1.5rem; /* Tamanho da fonte menor para o total reduzido */
             font-weight: 400; /* Peso da fonte normal */
             color: #666; /* Cor cinza para o texto total */
-            margin-left: 8px; /* Espaçamento à esquerda reduzido */
+            margin-left: 5px; /* Espaçamento à esquerda reduzido */
             line-height: 1; /* Altura da linha */
         }
         .add-button {
             background-color: #ef4444; /* Vermelho vibrante do tomate para o botão */
             color: white; /* Texto branco */
-            font-size: 3rem; /* Tamanho da fonte para o "+" reduzido */
+            font-size: 2.5rem; /* Tamanho da fonte para o "+" reduzido */
             font-weight: 700; /* Negrito */
-            width: 80px; /* Largura do botão reduzida */
-            height: 80px; /* Altura do botão reduzida */
+            width: 70px; /* Largura do botão reduzida */
+            height: 70px; /* Altura do botão reduzida */
             border-radius: 50%; /* Transforma o botão em um círculo */
             border: none; /* Remove a borda */
             cursor: pointer; /* Indica que é clicável */
@@ -129,37 +126,35 @@
         }
 
         /* Media Queries para responsividade em telas menores */
-        @media (max-width: 640px) {
+        @media (max-width: 400px) { /* Ajuste do breakpoint para se adequar a telas mais estreitas */
             .container {
                 flex-direction: column; /* Volta para a direção vertical em telas muito pequenas */
                 width: 90%; /* Ajusta a largura */
-                min-height: auto; /* Remove a altura mínima fixa */
-                padding: 15px; /* Reduz o padding */
+                height: auto; /* Altura automática */
+                padding: 10px; /* Reduz o padding */
             }
             .left-panel, .right-panel {
                 padding: 0; /* Remove padding lateral */
-            }
-            .tomato-icon {
-                width: 60px; /* Reduz o tamanho do tomate */
-                height: 60px;
-                margin-bottom: 10px;
-            }
-            .session-count {
-                font-size: 3.5rem; /* Reduz o tamanho da fonte do contador */
-            }
-            .session-total {
-                font-size: 1.5rem; /* Reduz o tamanho da fonte do total */
+                margin-bottom: 10px; /* Adiciona margem entre os painéis empilhados */
             }
             .add-button {
-                width: 70px; /* Reduz o tamanho do botão */
-                height: 70px;
-                font-size: 2.5rem;
-                margin-top: 15px; /* Adiciona espaçamento superior para o botão */
+                margin-top: 10px; /* Ajusta a margem superior do botão quando empilhado */
+            }
+            .tomato-icon {
+                width: 50px; /* Reduz o tamanho do tomate */
+                height: 50px;
+                margin-bottom: 8px;
+            }
+            .session-count {
+                font-size: 3rem; /* Reduz o tamanho da fonte do contador */
+            }
+            .session-total {
+                font-size: 1.2rem; /* Reduz o tamanho da fonte do total */
             }
             .restart-button {
-                top: 5px;
-                right: 5px;
-                font-size: 1.3rem;
+                top: 3px;
+                right: 3px;
+                font-size: 1rem;
             }
         }
     </style>
