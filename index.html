@@ -24,7 +24,7 @@
             background-color: transparent; /* Fundo transparente */
             border-radius: 0; /* Sem cantos arredondados */
             box-shadow: none; /* Sem sombra */
-            padding: 10px; /* Espaçamento interno reduzido */
+            padding: 5px; /* Espaçamento interno ainda mais reduzido */
             display: flex;
             flex-direction: row; /* Layout horizontal por padrão para formato quadrado */
             align-items: center; /* Centraliza os itens verticalmente na linha */
@@ -32,7 +32,7 @@
             width: 250px; /* Largura para o formato quadrado */
             height: 250px; /* Altura para o formato quadrado */
             position: relative; /* Necessário para posicionar elementos internos se precisarem de absolute */
-            gap: 20px; /* Espaçamento entre os painéis esquerdo e direito */
+            gap: 10px; /* Espaçamento reduzido entre os painéis esquerdo e direito */
         }
         /* Estilos para o painel esquerdo (tomate e contador) */
         .left-panel {
@@ -58,7 +58,7 @@
             color: #dc2626; /* Cor vermelha do tomate */
             font-size: 1.2rem; /* Tamanho do ícone reduzido */
             transition: transform 0.2s ease-in-out; /* Transição suave para o efeito de rotação */
-            margin-bottom: 10px; /* Espaçamento entre o botão de reiniciar e o de adicionar */
+            margin-bottom: 5px; /* Espaçamento reduzido entre o botão de reiniciar e o de adicionar */
         }
         .restart-button:hover {
             transform: rotate(90deg); /* Gira o ícone ao passar o mouse */
@@ -66,7 +66,7 @@
         .tomato-icon {
             width: 60px; /* Largura do ícone do tomate reduzida */
             height: 60px; /* Altura do ícone do tomate reduzida */
-            margin-bottom: 10px; /* Espaçamento abaixo do ícone */
+            margin-bottom: 5px; /* Espaçamento abaixo do ícone reduzido */
             animation: bounce 2s infinite; /* Adiciona uma animação de pulo ao tomate */
         }
         /* Animação de pulo para o ícone do tomate */
@@ -96,7 +96,7 @@
             font-size: 1.5rem; /* Tamanho da fonte menor para o total reduzido */
             font-weight: 400; /* Peso da fonte normal */
             color: #666; /* Cor cinza para o texto total */
-            margin-left: 5px; /* Espaçamento à esquerda reduzido */
+            margin-left: 3px; /* Espaçamento à esquerda ainda mais reduzido */
             line-height: 1; /* Altura da linha */
         }
         .add-button {
@@ -130,8 +130,8 @@
                 flex-direction: column; /* Volta para a direção vertical em telas muito pequenas */
                 width: 90%; /* Ajusta a largura */
                 height: auto; /* Altura automática */
-                padding: 10px; /* Reduz o padding */
-                gap: 10px; /* Reduz o espaçamento entre os painéis quando empilhados */
+                padding: 5px; /* Reduz o padding */
+                gap: 5px; /* Reduz o espaçamento entre os painéis quando empilhados */
             }
             .left-panel, .right-panel {
                 padding: 0; /* Remove padding lateral */
@@ -141,12 +141,12 @@
                 margin-top: 0; /* Remove margem superior extra se empilhado */
             }
             .restart-button {
-                margin-bottom: 8px; /* Ajusta o espaçamento abaixo do botão reiniciar */
+                margin-bottom: 5px; /* Ajusta o espaçamento abaixo do botão reiniciar */
             }
             .tomato-icon {
                 width: 50px; /* Reduz o tamanho do tomate */
                 height: 50px;
-                margin-bottom: 8px;
+                margin-bottom: 5px;
             }
             .session-count {
                 font-size: 3rem; /* Reduz o tamanho da fonte do contador */
@@ -223,7 +223,7 @@
                 oscillator.frequency.setValueAtTime(440, audioContext.currentTime); /* Frequência de 440 Hz (Nota A4) */
                 gainNode.gain.setValueAtTime(0.5, audioContext.currentTime); /* Volume máximo inicial */
                 // Diminui exponencialmente o volume para criar um efeito de fade out rápido
-                gainNode.gain.exponentialRampToValueAtTime(0.001, audioContext.currentTime + 0.1); 
+                gainNode.gain.exponentialRampToValueAtTime(0.001, audioContext.currentTime + 0.1);
 
                 oscillator.connect(gainNode); /* Conecta o oscilador ao nó de ganho */
                 gainNode.connect(audioContext.destination); /* Conecta o nó de ganho à saída de áudio */
