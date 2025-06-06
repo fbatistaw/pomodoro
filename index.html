@@ -31,7 +31,8 @@
             justify-content: center; /* Centraliza o conteúdo horizontalmente */
             width: 250px; /* Largura para o formato quadrado */
             height: 250px; /* Altura para o formato quadrado */
-            position: relative; /* Necessário para posicionar o botão de reiniciar */
+            position: relative; /* Necessário para posicionar elementos internos se precisarem de absolute */
+            gap: 20px; /* Espaçamento entre os painéis esquerdo e direito */
         }
         /* Estilos para o painel esquerdo (tomate e contador) */
         .left-panel {
@@ -41,7 +42,7 @@
             justify-content: center; /* Centraliza verticalmente os elementos dentro do painel esquerdo */
             flex: 1; /* Permite que o painel ocupe espaço disponível */
         }
-        /* Estilos para o painel direito (botão adicionar) */
+        /* Estilos para o painel direito (botão adicionar e reiniciar) */
         .right-panel {
             display: flex;
             flex-direction: column; /* Botões empilhados verticalmente */
@@ -51,15 +52,13 @@
         }
 
         .restart-button {
-            position: absolute;
-            top: 5px; /* Posição mais próxima da borda */
-            right: 5px; /* Posição mais próxima da borda */
             background: none; /* Sem fundo */
             border: none; /* Sem borda */
             cursor: pointer; /* Indica que é clicável */
             color: #dc2626; /* Cor vermelha do tomate */
             font-size: 1.2rem; /* Tamanho do ícone reduzido */
             transition: transform 0.2s ease-in-out; /* Transição suave para o efeito de rotação */
+            margin-bottom: 10px; /* Espaçamento entre o botão de reiniciar e o de adicionar */
         }
         .restart-button:hover {
             transform: rotate(90deg); /* Gira o ícone ao passar o mouse */
@@ -132,13 +131,17 @@
                 width: 90%; /* Ajusta a largura */
                 height: auto; /* Altura automática */
                 padding: 10px; /* Reduz o padding */
+                gap: 10px; /* Reduz o espaçamento entre os painéis quando empilhados */
             }
             .left-panel, .right-panel {
                 padding: 0; /* Remove padding lateral */
-                margin-bottom: 10px; /* Adiciona margem entre os painéis empilhados */
+                margin-bottom: 0; /* Remove margem extra */
             }
             .add-button {
-                margin-top: 10px; /* Ajusta a margem superior do botão quando empilhado */
+                margin-top: 0; /* Remove margem superior extra se empilhado */
+            }
+            .restart-button {
+                margin-bottom: 8px; /* Ajusta o espaçamento abaixo do botão reiniciar */
             }
             .tomato-icon {
                 width: 50px; /* Reduz o tamanho do tomate */
@@ -151,25 +154,11 @@
             .session-total {
                 font-size: 1.2rem; /* Reduz o tamanho da fonte do total */
             }
-            .restart-button {
-                top: 3px;
-                right: 3px;
-                font-size: 1rem;
-            }
         }
     </style>
 </head>
 <body>
     <div class="container">
-        <!-- Botão de Reiniciar no canto superior direito (mantém posição absoluta relativa ao container) -->
-        <button id="restartButton" class="restart-button" aria-label="Reiniciar Contagem">
-            <!-- Ícone de seta girando mais simples (SVG) -->
-            <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" fill="currentColor" viewBox="0 0 16 16">
-                <path fill-rule="evenodd" d="M8 3a5 5 0 1 0 4.546 2.914.5.5 0 0 1 .908-.417A6 6 0 1 1 8 2v1z"/>
-                <path d="M8 4.464l-2.071 2.072-.707-.707 2.778-2.779h.707zm-.707 7.072l-2.071-2.072.707-.707 2.778 2.779h.707z"/>
-            </svg>
-        </button>
-
         <!-- Painel Esquerdo: Tomate e Contador -->
         <div class="left-panel">
             <!-- Ícone de Tomate (SVG simples) -->
@@ -190,8 +179,17 @@
             </div>
         </div>
 
-        <!-- Painel Direito: Botão Adicionar -->
+        <!-- Painel Direito: Botão Reiniciar e Botão Adicionar -->
         <div class="right-panel">
+            <!-- Botão de Reiniciar -->
+            <button id="restartButton" class="restart-button" aria-label="Reiniciar Contagem">
+                <!-- Ícone de seta girando mais simples (SVG) -->
+                <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" fill="currentColor" viewBox="0 0 16 16">
+                    <path fill-rule="evenodd" d="M8 3a5 5 0 1 0 4.546 2.914.5.5 0 0 1 .908-.417A6 6 0 1 1 8 2v1z"/>
+                    <path d="M8 4.464l-2.071 2.072-.707-.707 2.778-2.779h.707zm-.707 7.072l-2.071-2.072.707-.707 2.778 2.779h.707z"/>
+                </svg>
+            </button>
+
             <!-- Botão para adicionar sessões -->
             <button id="addButton" class="add-button">+</button>
         </div>
